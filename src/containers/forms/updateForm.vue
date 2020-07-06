@@ -38,7 +38,7 @@
             <b-colxx sm="4">
               <label class="form-group has-float-label">
                 <input type="checkbox" class="form-control" v-model="destAr" />
-                <span>{{ $t('forms.destArr') }}</span>
+                <span>{{ $t('forms.destAr') }}</span>
               </label>
             </b-colxx>
             <b-colxx sm="6">
@@ -68,6 +68,7 @@ import { getDirection } from "../../utils";
 export default {
   props: [
         "order",
+        "tUp"
   /*  "orderNo",
     "tel",
     "cName",
@@ -83,7 +84,7 @@ export default {
     this.cName = this.order.cName;
     this.postSent = this.order.postSent;
     this.mSent = this.order.mSent;
-    this.destArr = this.order.destAr;
+    this.destAr = this.order.destAr;
     this.pCode = this.order.pCode;
     this.mshow = this.order.mshow;
 
@@ -108,19 +109,6 @@ export default {
     onTopLabelsOverLineFormSubmit() {
       console.log(JSON.stringify(this.topLabelsOverLineForm));
     },
-    sdm(){
-    //  const orderObg = {
-        this.orderNo= oobg.orderNo;
-        this.tel= oobg.tel;
-        this.cName= oobg.cName;
-        this.postSent= oobg.postSent;
-       this.mSent= oobg.mSent;
-        this.destAr= oobg.destArr;
-       this.pCode= oobg.Code;
-    //  };
-            this.$emit('upIn', {orderNo,tel,cName,postSent,mSent,destAr,pCode});
-
-    },
     updateOrder() {
      /* this.addTodoItem({
         orderNo: this.orderData.orderNo,
@@ -128,20 +116,20 @@ export default {
         cName: this.orderData.cName,
         postSent: this.orderData.postSent,
         mSent: this.orderData.mSent,
-        destArr: this.orderData.destArr,
+        destAr: this.orderData.destAr,
         pCode: this.orderData.pCode,
         mshow: this.orderData.mshow
       });*/
 
-      this.isUpdate = false;
+      
       const orderObg = {
-        orderNo: this.getorderNo,
-        tel: this.gettel,
-        cName: this.getcName,
-        postSent: this.getpostSent,
-        mSent: this.getmSent,
-        destAr: this.getdestArr,
-        pCode: this.getCode
+        orderNo: this.orderNo,
+        tel: this.tel,
+        cName: this.cName,
+        postSent: this.postSent,
+        mSent: this.mSent,
+        destAr: this.destAr,
+        pCode: this.pCode
       };
 
       axios
@@ -153,6 +141,8 @@ export default {
         )
         .then(response => {
           this.addNotification("info", "", response.data);
+          this.tUp();
+          //this.$emit('avs');
           return response.data;
         });
       /*this.orderData = {
@@ -161,7 +151,7 @@ export default {
         cName: "",
         postSent: 0,
         mSent: 0,
-        destArr: 0,
+        destAr: 0,
         pCode: "",
         mshow: false
       };*/
@@ -189,7 +179,7 @@ export default {
       return this.mSent;
     },
     getdestArr() {
-      return this.destArr;
+      return this.destAr;
     },
     getpCode() {
       return this.pCode;
@@ -236,10 +226,10 @@ export default {
     },
     getdestArr: {
       get: function() {
-        return this.destArr;
+        return this.destAr;
       },
       set: function(newValue) {
-        this.$emit("update:destArr", newValue);
+        this.$emit("update:destAr", newValue);
       }
     },
     getpCode: {
@@ -258,7 +248,7 @@ export default {
     this.cName.value = "new value";
     this.postSent.value = "new value";
     this.mSent.value = "new value";
-    this.destArr.value = "new value";
+    this.destAr.value = "new value";
     this.pCode.value = "new value";
   }*/
   },
@@ -305,7 +295,7 @@ export default {
     },
     getdestArr: {
       get: function() {
-        return this.destArr;
+        return this.destAr;
       },
       set: function(newValue) {
         this.$emit("input:value", newValue);

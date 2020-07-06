@@ -5,7 +5,7 @@
       <b-modal id="modallg" ref="modallg" size="lg" title="Large Modal" hide-footer>
         <updateForm
          :order="orderObg"
-         
+         :tUp="tableUpdate"
         ></updateForm>
       </b-modal>
       <b-colxx xxs="12">
@@ -81,17 +81,7 @@
 
 
 <script>
-/*
- :orderNo="orderNo"
-          :cName="cName"
-          :tel="tel"
-          :postSent="postSent"
-          :mSent="mSent"
-          :destArr="destArr"
-          :pCode="pCode"
-          @upIn="updateIn"
-          :updateOrder="updateOrder"
-          */
+
 import Vuetable from "vuetable-2/src/components/Vuetable";
 import VuetablePaginationBootstrap from "../../../components/Common/VuetablePaginationBootstrap";
 import { apiUrl } from "../../../constants/config";
@@ -125,7 +115,7 @@ export default {
       cName: "",
       postSent: 0,
       mSent: 0,
-      destArr: 0,
+      destAr: 0,
       pCode: "",
       mshow: false,
  orderObg : {
@@ -189,7 +179,7 @@ export default {
           width: "10%"
         },
         {
-          name: "postCode",
+          name: "pCode",
           sortField: "postCode",
           title: "کد پیگیری",
           titleClass: "",
@@ -224,40 +214,8 @@ export default {
             search: this.search
           };
     },
-    updateIn(obj) {
-      console.log(obj);
-      
-      this.orderNo = obj.orderNo;
-      this.tel = obj.tel;
-      this.cName = obj.cName;
-      this.postSent = obj.postSent;
-      this.mSent = obj.mSent;
-      this.destArr = obj.destArr;
-      this.pCode = obj.pCode;
-    },
+   
     updateOrder() {
-      /* this.addTodoItem({
-        orderNo: this.orderData.orderNo,
-        tel: this.orderData.tel,
-        cName: this.orderData.cName,
-        postSent: this.orderData.postSent,
-        mSent: this.orderData.mSent,
-        destArr: this.orderData.destArr,
-        pCode: this.orderData.pCode,
-        mshow: this.orderData.mshow
-      });*/
-
-      this.isUpdate = false;
-     /* const orderObg = {
-        orderNo: this.orderNo,
-        tel: this.tel,
-        cName: this.cName,
-        postSent: this.postSent,
-        mSent: this.mSent,
-        destAr: this.destArr,
-        pCode: this.Code
-      };*/
-
       axios
         .put(
           apiUrl + "/" + this.orderObg.orderNo,
@@ -267,18 +225,11 @@ export default {
         )
         .then(response => {
           this.addNotification("info", "", response.data);
+          
           return response.data;
+          
         });
-      /*this.orderData = {
-        orderNo: "",
-        tel: "",
-        cName: "",
-        postSent: 0,
-        mSent: 0,
-        destArr: 0,
-        pCode: "",
-        mshow: false
-      };*/
+      
     },
     onRowClass(dataItem, index) {
       if (this.selectedItems.includes(dataItem.id)) {
@@ -308,7 +259,7 @@ export default {
       cName = this.cName;
       postSent = this.postSent;
       mSent = this.mSent;
-      destArr = this.destArr;
+      destAr = this.destAr;
       pCode = this.pCode;
     },
     rowClicked(dataItem, event) {
@@ -318,7 +269,7 @@ export default {
       this.cName = dataItem.cName;
       this.postSent = dataItem.postSent;
       this.mSent = dataItem.mSent;
-      this.destArr = dataItem.destArr;
+      this.destAr = dataItem.destAr;
       this.pCode = dataItem.pCode;
 
       this.orderObg.orderNo = dataItem.orderNo;
@@ -326,8 +277,9 @@ export default {
       this.orderObg.cName = dataItem.cName;
       this.orderObg.postSent = dataItem.postSent;
       this.orderObg.mSent = dataItem.mSent;
-      this.orderObg.destAr = dataItem.destArr;
+      this.orderObg.destAr = dataItem.destAr;
       this.orderObg.pCode = dataItem.pCode;
+
       console.log(this.orderNo);
       const itemId = dataItem.id;
       if (event.shiftKey && this.selectedItems.length > 0) {
@@ -372,7 +324,9 @@ export default {
     onChangePage(page) {
       this.$refs.vuetable.changePage(page);
     },
-
+  tableUpdate(){
+this.$refs.vuetable.refresh();
+  },
     changePageSize(perPage) {
       this.perPage = perPage;
       this.$refs.vuetable.refresh();
