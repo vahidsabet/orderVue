@@ -79,7 +79,8 @@
     "careers": "Careers",
     "confirmation": "Confirmation",
     "contact": "Contact",
-    "docs": "زیپلین",
+    "ziplinWeb": "زیپلین",
+    "takyekWeb": "تک یک",
     "features": "Features",
     "prices": "Prices",
     "videos": "Videos",
@@ -112,7 +113,8 @@
     "home": "خانه",
     "second-menu": "Second Menu",
     "second": "Second",
-    "start": "خانه"
+    "start": "خانه",
+    "orderReg": "افزودن سفارش"
   },
   "dashboards": {
     "pending-orders": "Pending Orders",
@@ -158,7 +160,7 @@
     "pending-for-print": "Pending for print",
     "logs": "Logs",
     "piaf": "PIAF",
-    "magic-is-in-the-details": "MAGIC IS IN THE DETAILS",
+    "magic-is-in-the-details": "مدیریت سفارشات",
     "yes-it-is-indeed": "Yes, it is indeed!",
     "advanced-search": "Advanced Search",
     "toppings": "Toppings",
@@ -473,10 +475,8 @@
     "tel":"تلفن",
     "postSent":"ارسال برای پست",
     "mSent":"ارسال از مشهد",
-    "destArr":"به مقصد رسیده",
+    "destAr":"به مقصد رسیده",
     "pCode":"شماره پیگیری"
-
-
   },
   "form-components": {
     "custom-inputs": "Custom Inputs",

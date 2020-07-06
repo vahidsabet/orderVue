@@ -5,9 +5,9 @@
             <div class="position-relative image-side">
                 <p class="text-white h2">{{ $t('dashboards.magic-is-in-the-details') }}</p>
                 <p class="white mb-0">
-                    Please use your e-mail to reset your password.
-                    <br />If you are not a member, please
-                    <router-link tag="a" to="/user/register" class="white">register</router-link>.
+                    ایمیل خود را وارد نمایید
+                    <br />اگر عضو نیستید
+                    <router-link tag="a" to="/user/register" class="white">ثبت نام</router-link>.
                 </p>
             </div>
             <div class="form-side">
@@ -18,9 +18,9 @@
                 <b-form @submit.prevent="formSubmit" class="av-tooltip tooltip-label-bottom">
                     <b-form-group :label="$t('user.email')" class="has-float-label mb-4">
                         <b-form-input type="text" v-model="$v.form.email.$model" :state="!$v.form.email.$error" />
-                        <b-form-invalid-feedback v-if="!$v.form.email.required">Please enter your email address</b-form-invalid-feedback>
-                        <b-form-invalid-feedback v-else-if="!$v.form.email.email">Please enter a valid email address</b-form-invalid-feedback>
-                        <b-form-invalid-feedback v-else-if="!$v.form.email.minLength">Your email must be minimum 4 characters</b-form-invalid-feedback>
+                        <b-form-invalid-feedback v-if="!$v.form.email.required">ایمیل را وارد نمایید</b-form-invalid-feedback>
+                        <b-form-invalid-feedback v-else-if="!$v.form.email.email">ایمیل معتبر وارد نمایید</b-form-invalid-feedback>
+                        <b-form-invalid-feedback v-else-if="!$v.form.email.minLength">حداقل 4 کاراکتر نیاز است</b-form-invalid-feedback>
                     </b-form-group>
                     <div class="d-flex justify-content-between align-items-center">
                         <router-link tag="a" to="/user/forgot-password">{{ $t('user.forgot-password-question')}}</router-link>

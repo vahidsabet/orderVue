@@ -5,9 +5,9 @@
         <div class="position-relative image-side">
           <p class="text-white h2">{{ $t('dashboards.magic-is-in-the-details') }}</p>
           <p class="white mb-0">
-            Please use your credentials to login.
-            <br />If you are not a member, please
-            <router-link tag="a" to="/user/register" class="white">register</router-link>.
+            اطلاعات ورود را وارد نمایید
+            <br />اگر ثبت نام نکردید
+            <router-link tag="a" to="/user/register" class="white">ثبت نام</router-link>
           </p>
         </div>
         <div class="form-side">
@@ -23,10 +23,10 @@
                 v-model="$v.form.password.$model"
                 :state="!$v.form.password.$error"
               />
-              <b-form-invalid-feedback v-if="!$v.form.password.required">Please enter your password</b-form-invalid-feedback>
+              <b-form-invalid-feedback v-if="!$v.form.password.required">پسورد خود را وارد نمایید</b-form-invalid-feedback>
               <b-form-invalid-feedback
                 v-else-if="!$v.form.password.minLength || !$v.form.password.maxLength"
-              >Your password must be between 4 and 16 characters</b-form-invalid-feedback>
+              >پسورد شما باید بین 4 تا 16 کاراکتر باشد</b-form-invalid-feedback>
             </b-form-group>
             <b-form-group :label="$t('user.password-again')" class="has-float-label mb-4">
               <b-form-input
@@ -36,10 +36,10 @@
               />
               <b-form-invalid-feedback
                 v-if="!$v.form.passwordAgain.required"
-              >Please enter your password again</b-form-invalid-feedback>
+              >ورود دوباره پسورد</b-form-invalid-feedback>
               <b-form-invalid-feedback
                 v-else-if="!$v.form.passwordAgain.sameAsPassword"
-              >Your inputs does not match</b-form-invalid-feedback>
+              >پسورد یکسان نیست</b-form-invalid-feedback>
             </b-form-group>
 
             <div class="d-flex justify-content-between align-items-center">

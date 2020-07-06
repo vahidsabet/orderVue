@@ -5,9 +5,9 @@
             <div class="position-relative image-side">
                 <p class="text-white h2">{{ $t('dashboards.magic-is-in-the-details') }}</p>
                 <p class="white mb-0">
-                    Please use your credentials to login.
-                    <br />If you are not a member, please
-                    <router-link tag="a" to="/user/register" class="white">register</router-link>.
+                   اطلاعات خود را وارد نمایید
+                    <br />اگر عضو نیستید
+                    <router-link tag="a" to="/user/register" class="white">ثبت نام</router-link>
                 </p>
             </div>
             <div class="form-side">
@@ -19,15 +19,15 @@
                 <b-form @submit.prevent="formSubmit" class="av-tooltip tooltip-label-bottom">
                     <b-form-group :label="$t('user.email')" class="has-float-label mb-4">
                         <b-form-input type="text" v-model="$v.form.email.$model" :state="!$v.form.email.$error" />
-                        <b-form-invalid-feedback v-if="!$v.form.email.required">Please enter your email address</b-form-invalid-feedback>
-                        <b-form-invalid-feedback v-else-if="!$v.form.email.email">Please enter a valid email address</b-form-invalid-feedback>
-                        <b-form-invalid-feedback v-else-if="!$v.form.email.minLength">Your email must be minimum 4 characters</b-form-invalid-feedback>
+                        <b-form-invalid-feedback v-if="!$v.form.email.required">ایمیل خود را وارد نمایید</b-form-invalid-feedback>
+                        <b-form-invalid-feedback v-else-if="!$v.form.email.email">ایمیل معتبر وارد نمایید</b-form-invalid-feedback>
+                        <b-form-invalid-feedback v-else-if="!$v.form.email.minLength">حداقل 4 کاراکتر نیاز است</b-form-invalid-feedback>
                     </b-form-group>
 
                     <b-form-group :label="$t('user.password')" class="has-float-label mb-4">
                         <b-form-input type="password" v-model="$v.form.password.$model" :state="!$v.form.password.$error" />
-                        <b-form-invalid-feedback v-if="!$v.form.password.required">Please enter your password</b-form-invalid-feedback>
-                        <b-form-invalid-feedback v-else-if="!$v.form.password.minLength || !$v.form.password.maxLength">Your password must be between 4 and 16 characters</b-form-invalid-feedback>
+                        <b-form-invalid-feedback v-if="!$v.form.password.required">پسورد خود را وارد نمایید</b-form-invalid-feedback>
+                        <b-form-invalid-feedback v-else-if="!$v.form.password.minLength || !$v.form.password.maxLength">پسورد باید بین 4 تا 16 کاراکتر باشد</b-form-invalid-feedback>
                     </b-form-group>
                     <div class="d-flex justify-content-between align-items-center">
                         <router-link tag="a" to="/user/forgot-password">{{ $t('user.forgot-password-question')}}</router-link>
@@ -64,6 +64,7 @@ import {
 import {
     validationMixin
 } from "vuelidate";
+import firebase from "firebase";
 const {
     required,
     maxLength,
@@ -75,9 +76,10 @@ export default {
     data() {
         return {
             form: {
-                email: "test@coloredstrategies.com",
-                password: "xxxxxx"
+                email: "",
+                password: ""
             },
+            error:null
         };
     },
     mixins: [validationMixin],
@@ -102,16 +104,43 @@ export default {
         ...mapActions(["login"]),
         formSubmit() {
             this.$v.$touch();
-            this.form.email = "piaf-vue@coloredstrategies.com";
-            this.form.password = "piaf123";
+          //  this.form.email = "piaf-vue@coloredstrategies.com";
+           // this.form.password = "piaf123";
             this.$v.form.$touch();
-           // if (!this.$v.form.$anyError) {
-                this.login({
+            if (!this.$v.form.$anyError) {
+                firebase
+                .auth()
+                .signInWithEmailAndPassword(this.form.email, this.form.password)
+                .then(data => {
+                    this.addNotification("success filled" , "پیام",data);
+                    this.login({
+                    email: data.user.email,
+                    password: data.user.password
+                });
+                    console.log('====================================');
+                    console.log(data.user);
+                    console.log(data.user.isAnonymous);
+                    console.log('====================================');
+               // this.$router.replace({ name: "Dashboard" });
+                })
+                .catch(err => {
+                this.error = err.message;
+                this.addNotification("success filled" , "پیام",err.message);
+                });
+               /* this.login({
                     email: this.form.email,
                     password: this.form.password
-                });
-            //}
-        }
+                });*/
+            }
+              
+        },
+        addNotification(
+      type = "info",
+      title = "This is Notify Title",
+      message = "This is Notify Message,<br>with html."
+    ) {
+      this.$notify(type, title, message, { duration: 3000, permanent: false });
+    }
     },
     watch: {
         currentUser(val) {

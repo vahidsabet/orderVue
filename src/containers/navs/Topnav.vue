@@ -95,7 +95,7 @@
           <b-dropdown-item>پروفایل</b-dropdown-item>
          
           <b-dropdown-divider />
-          <b-dropdown-item @click="logout">خروج</b-dropdown-item>
+          <b-dropdown-item @click.prevent="signOut">خروج</b-dropdown-item>
         </b-dropdown>
       </div>
     </div>
@@ -105,7 +105,7 @@
 <script>
 import Switches from "vue-switches";
 import notifications from "../../data/notifications";
-
+import firebase from "firebase";
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import { MenuIcon, MobileMenuIcon } from "../../components/Svg";
 import {
@@ -176,7 +176,17 @@ export default {
         this.$router.push("/user/login");
       });
     },
-
+signOut() {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+           this.$router.push("/user/login");
+         /* this.$router.replace({
+            name: "home"
+          });*/
+        });
+    },
     toggleFullScreen() {
       const isInFullScreen = this.isInFullScreen();
 

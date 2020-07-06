@@ -2,13 +2,13 @@
 <div>
   <b-row>
     <b-colxx xxs="12">
-      <piaf-breadcrumb :heading="$t('menu.single')"/>
+      <piaf-breadcrumb :heading="$t('forms.single')"/>
       <div class="separator mb-5 mb"></div>
     </b-colxx>
   </b-row>
   <b-row>
     <b-colxx xxs="12">
-        <b-card class="mb-4" :title="$t('menu.single')" >
+        <b-card class="mb-4" :title="$t('forms.single')" >
         </b-card>
          <layout-top-labels-over-line></layout-top-labels-over-line>
     </b-colxx>

@@ -1,0 +1,9 @@
+@font-face{
+    font-family: 'IsWeb';
+    src: url('../fonts/IsWeb.eot');
+    src: url('../fonts/IsWeb.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/IsWeb.woff') format('woff'),
+         url('../fonts/IsWeb.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}

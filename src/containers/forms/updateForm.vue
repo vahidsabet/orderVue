@@ -110,18 +110,6 @@ export default {
       console.log(JSON.stringify(this.topLabelsOverLineForm));
     },
     updateOrder() {
-     /* this.addTodoItem({
-        orderNo: this.orderData.orderNo,
-        tel: this.orderData.tel,
-        cName: this.orderData.cName,
-        postSent: this.orderData.postSent,
-        mSent: this.orderData.mSent,
-        destAr: this.orderData.destAr,
-        pCode: this.orderData.pCode,
-        mshow: this.orderData.mshow
-      });*/
-
-      
       const orderObg = {
         orderNo: this.orderNo,
         tel: this.tel,
@@ -140,24 +128,13 @@ export default {
         }*/
         )
         .then(response => {
-          this.addNotification("info", "", response.data);
-          this.tUp();
-          //this.$emit('avs');
+          this.addNotification("success filled" , "پیام", response.data.msg);
+          this.tUp();       
           return response.data;
         });
-      /*this.orderData = {
-        orderNo: "",
-        tel: "",
-        cName: "",
-        postSent: 0,
-        mSent: 0,
-        destAr: 0,
-        pCode: "",
-        mshow: false
-      };*/
     },
     addNotification(
-      type = "success",
+      type = "info",
       title = "This is Notify Title",
       message = "This is Notify Message,<br>with html."
     ) {

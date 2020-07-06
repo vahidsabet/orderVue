@@ -4,14 +4,14 @@
       <b-card class="auth-card" no-body>
           <div class="position-relative image-side ">
             <p class=" text-white h2">{{ $t('dashboards.magic-is-in-the-details') }}</p>
-              <p class="white mb-0">  Please use this form to register. <br />If you are a member, please
-                <router-link tag="a" to="/user/login" class="white">login</router-link>.
+              <p class="white mb-0">  اطلاعات خود را وارد نمایید <br />
+                <router-link tag="a" to="/user/login" class="white">ورود کاربر</router-link>
               </p>
           </div>
           <div class="form-side">
             <router-link tag="a" to="/"><span class="logo-single"/></router-link>
             <h6 class="mb-4">{{ $t('user.register')}}</h6>
-            <b-form @submit.prevent="formSubmit">
+            <b-form @submit.prevent="submit">
                <label class="form-group has-float-label mb-4">
                 <input type="text" class="form-control" v-model="fullname">
                 <span>{{ $t('user.fullname') }}</span>
@@ -34,6 +34,8 @@
   </b-row>
 </template>
 <script>
+import firebase from "firebase";
+
 export default {
   data () {
     return {
@@ -43,10 +45,37 @@ export default {
     }
   },
   methods: {
-    formSubmit () {
+   /*formSubmit () {
       console.log('register')
       this.$router.push('/')
+    },*/
+         addNotification(
+      type = "info",
+      title = "This is Notify Title",
+      message = "This is Notify Message,<br>with html."
+    ) {
+      this.$notify(type, title, message, { duration: 3000, permanent: false });
+    },
+     submit() {
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(this.email, this.password)
+        .then(data => {
+          data.user
+            .updateProfile({
+              displayName: this.fullname,
+              isAnonymous:true
+            })
+            .then(() => {              
+                this.addNotification("success filled" , "پیام","ثبت نام انجام شد");
+            });
+        })
+        .catch(err => {
+          this.error = err.message;
+           this.addNotification("error filled" , "خطا", err.message);
+        });
     }
+    
   }
 }
 </script>

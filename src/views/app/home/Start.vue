@@ -14,7 +14,7 @@
     </b-row>
     <b-row>
       <b-colxx xxs="12">
-        <b-card class="mb-4" :title="$t('menu.orders')">
+        <b-card class="mb-4" :title="$t('forms.orders')">
           <datatable-heading
             :title="$t('menu.divided-table')"
             :selectAll="selectAll"
@@ -85,9 +85,10 @@
 import Vuetable from "vuetable-2/src/components/Vuetable";
 import VuetablePaginationBootstrap from "../../../components/Common/VuetablePaginationBootstrap";
 import { apiUrl } from "../../../constants/config";
+
 import DatatableHeading from "../../../containers/datatable/DatatableHeading";
 import LayoutTopLabelsOverLine from "../../../containers/forms/updateForm";
-import axios from "axios";
+
 export default {
   props: ["title"],
   components: {
@@ -109,15 +110,7 @@ export default {
       total: 0,
       lastPage: 0,
       items: [],
-      selectedItems: [],
-      orderNo: "",
-      tel: "",
-      cName: "",
-      postSent: 0,
-      mSent: 0,
-      destAr: 0,
-      pCode: "",
-      mshow: false,
+      selectedItems: [],    
  orderObg : {
        orderNo: "",
       tel: "",
@@ -185,13 +178,6 @@ export default {
           titleClass: "",
           dataClass: "text-muted",
           width: "10%"
-        },
-        {
-          name: "__slot:actions",
-          title: "",
-          titleClass: "center aligned text-right",
-          dataClass: "center aligned text-right",
-          width: "5%"
         }
       ]
     };
@@ -213,24 +199,7 @@ export default {
             per_page: this.perPage,
             search: this.search
           };
-    },
-   
-    updateOrder() {
-      axios
-        .put(
-          apiUrl + "/" + this.orderObg.orderNo,
-          this.orderObg /*,{
-          headers: { "Content-Type": "application/json" }
-        }*/
-        )
-        .then(response => {
-          this.addNotification("info", "", response.data);
-          
-          return response.data;
-          
-        });
-      
-    },
+    },   
     onRowClass(dataItem, index) {
       if (this.selectedItems.includes(dataItem.id)) {
         return "selected";
@@ -250,27 +219,16 @@ export default {
         this.$refs["modallg"].show();
       }
     },
-    update(val) {
-      this.orderNo = val;
-    },
-    onChildUpdate() {
-      orderNo = this.orderNo;
-      tel = this.tel;
-      cName = this.cName;
-      postSent = this.postSent;
-      mSent = this.mSent;
-      destAr = this.destAr;
-      pCode = this.pCode;
-    },
+   
     rowClicked(dataItem, event) {
       this.somethingModal("modallg");
-      this.orderNo = dataItem.orderNo;
+     /* this.orderNo = dataItem.orderNo;
       this.tel = dataItem.tel;
       this.cName = dataItem.cName;
       this.postSent = dataItem.postSent;
       this.mSent = dataItem.mSent;
       this.destAr = dataItem.destAr;
-      this.pCode = dataItem.pCode;
+      this.pCode = dataItem.pCode;*/
 
       this.orderObg.orderNo = dataItem.orderNo;
       this.orderObg.tel = dataItem.tel;
@@ -280,7 +238,7 @@ export default {
       this.orderObg.destAr = dataItem.destAr;
       this.orderObg.pCode = dataItem.pCode;
 
-      console.log(this.orderNo);
+      
       const itemId = dataItem.id;
       if (event.shiftKey && this.selectedItems.length > 0) {
         let itemsForToggle = this.items;

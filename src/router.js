@@ -37,7 +37,7 @@ const routes = [
 
 
       {
-        path: "single",
+        path: "addorder",
         component: () =>
           import(/* webpackChunkName: "single" */ "./views/app/single")
       }

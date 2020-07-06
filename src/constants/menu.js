@@ -37,14 +37,21 @@ const data = [{
 {
   id: "single",
   icon: "iconsminds-three-arrow-fork",
-  label: "menu.single",
-  to: "/app/single"
+  label: "menu.orderReg",
+  to: "/app/addorder"
 },
 {
-  id: "docs",
+  id: "ziplinWeb",
   icon: "iconsminds-library",
-  label: "menu.docs",
+  label: "menu.ziplinWeb",
   to: "https://ziplin.ir/",
+  newWindow: true
+},
+{
+  id: "takyekWeb",
+  icon: "iconsminds-library",
+  label: "menu.takyekWeb",
+  to: "https://takyek.com/",
   newWindow: true
 }
 ];
