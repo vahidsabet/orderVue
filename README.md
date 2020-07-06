@@ -1,4 +1,4 @@
-# piaf-vue
+# avs-vue
 
 ## Project setup
 ```
