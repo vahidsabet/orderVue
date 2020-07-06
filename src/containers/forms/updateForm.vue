@@ -12,7 +12,7 @@
             </b-colxx>
             <b-colxx sm="6">
               <label class="form-group has-float-label">
-                <input type="text" class="form-control" v-model="cName" />
+                <input type="text" class="form-control"   v-model="cName"/>
                 <span>{{ $t('forms.cName') }}</span>
               </label>
             </b-colxx>
@@ -50,7 +50,7 @@
           </b-row>
           <b-button
             type="submit"
-            @click="updateOrder()"
+            @click="updateOrder"
             variant="primary"
             class="mt-4"
           >{{ $t('forms.submit') }}</b-button>
@@ -62,56 +62,67 @@
 <script>
 
 import { apiUrl } from "../../constants/config";
-
+import axios from "axios";
 import { getDirection } from "../../utils";
-
+//:value="cName" @input="$emit('input', $event.target.value)"
 export default {
   props: [
-   /* "orderNo",
+        "order",
+  /*  "orderNo",
     "tel",
     "cName",
     "postSent",
     "mSent",
     "destAr",
-    "pCode",
-    "updateOrder"*/
-  ],
-  
+    "pCode",*/
+    //"updateOrder"//: { type: , required: true }
+],
+    mounted() {
+    this.orderNo = this.order.orderNo;
+    this.tel = this.order.tel;
+    this.cName = this.order.cName;
+    this.postSent = this.order.postSent;
+    this.mSent = this.order.mSent;
+    this.destArr = this.order.destAr;
+    this.pCode = this.order.pCode;
+    this.mshow = this.order.mshow;
+
+  },
   data() {
     return {
       direction: getDirection().direction,
       isUpdate: false,
-      orderData: {
+      //orderData: {
         orderNo: "",
         tel: "",
         cName: "",
         postSent: 0,
         mSent: 0,
-        destArr: 0,
+        destAr: 0,
         pCode: "",
         mshow: false
-      }
+     // }
     };
   },
   methods: {
     onTopLabelsOverLineFormSubmit() {
       console.log(JSON.stringify(this.topLabelsOverLineForm));
     },
-    sdm:function(oobg){
-      const orderObg = {
-        orderNo: oobg.orderNo,
-        tel: oobg.tel,
-        cName: oobg.cName,
-        postSent: oobg.postSent,
-        mSent: oobg.mSent,
-        destAr: oobg.destArr,
-        pCode: oobg.Code
-      };
-            this.$emit('upIn', oobg);
+    sdm(){
+    //  const orderObg = {
+        this.orderNo= oobg.orderNo;
+        this.tel= oobg.tel;
+        this.cName= oobg.cName;
+        this.postSent= oobg.postSent;
+       this.mSent= oobg.mSent;
+        this.destAr= oobg.destArr;
+       this.pCode= oobg.Code;
+    //  };
+            this.$emit('upIn', {orderNo,tel,cName,postSent,mSent,destAr,pCode});
 
     },
-   /* updateOrder() {
-     // this.addTodoItem({
+    updateOrder() {
+     /* this.addTodoItem({
         orderNo: this.orderData.orderNo,
         tel: this.orderData.tel,
         cName: this.orderData.cName,
@@ -120,7 +131,7 @@ export default {
         destArr: this.orderData.destArr,
         pCode: this.orderData.pCode,
         mshow: this.orderData.mshow
-      });//
+      });*/
 
       this.isUpdate = false;
       const orderObg = {
@@ -135,16 +146,16 @@ export default {
 
       axios
         .put(
-          apiUrl + "/" + orderData.orderNo,
-          orderData //,{
+          apiUrl + "/" + orderObg.orderNo,
+          orderObg /*,{
           headers: { "Content-Type": "application/json" }
-        }//
+        }*/
         )
         .then(response => {
           this.addNotification("info", "", response.data);
           return response.data;
         });
-      //this.orderData = {
+      /*this.orderData = {
         orderNo: "",
         tel: "",
         cName: "",
@@ -153,8 +164,8 @@ export default {
         destArr: 0,
         pCode: "",
         mshow: false
-      };//
-    },*/
+      };*/
+    },
     addNotification(
       type = "success",
       title = "This is Notify Title",
@@ -273,7 +284,7 @@ export default {
         return this.cName;
       },
       set: function(cName) {
-        this.$emit("input:value", cName);
+        this.$emit("input", cName);
       }
     },
     getpostSent: {

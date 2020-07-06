@@ -4,15 +4,8 @@
       
       <b-modal id="modallg" ref="modallg" size="lg" title="Large Modal" hide-footer>
         <updateForm
-          :orderNo="orderNo"
-          :cName="cName"
-          :tel="tel"
-          :postSent="postSent"
-          :mSent="mSent"
-          :destArr="destArr"
-          :pCode="pCode"
-          
-          :updateOrder="updateOrder"
+         :order="orderObg"
+         
         ></updateForm>
       </b-modal>
       <b-colxx xxs="12">
@@ -88,6 +81,17 @@
 
 
 <script>
+/*
+ :orderNo="orderNo"
+          :cName="cName"
+          :tel="tel"
+          :postSent="postSent"
+          :mSent="mSent"
+          :destArr="destArr"
+          :pCode="pCode"
+          @upIn="updateIn"
+          :updateOrder="updateOrder"
+          */
 import Vuetable from "vuetable-2/src/components/Vuetable";
 import VuetablePaginationBootstrap from "../../../components/Common/VuetablePaginationBootstrap";
 import { apiUrl } from "../../../constants/config";
@@ -124,7 +128,16 @@ export default {
       destArr: 0,
       pCode: "",
       mshow: false,
-
+ orderObg : {
+       orderNo: "",
+      tel: "",
+      cName: "",
+      postSent: 0,
+      mSent: 0,
+      destAr: 0,
+      pCode: "",
+      mshow: false,
+      },
       fields: [
         {
           name: "orderNo",
@@ -211,14 +224,16 @@ export default {
             search: this.search
           };
     },
-    updateIn() {
-      this.orderNo = orderNo;
-      this.tel = tel;
-      this.cName = cName;
-      this.postSent = postSent;
-      this.mSent = mSent;
-      this.destArr = destArr;
-      this.pCode = pCode;
+    updateIn(obj) {
+      console.log(obj);
+      
+      this.orderNo = obj.orderNo;
+      this.tel = obj.tel;
+      this.cName = obj.cName;
+      this.postSent = obj.postSent;
+      this.mSent = obj.mSent;
+      this.destArr = obj.destArr;
+      this.pCode = obj.pCode;
     },
     updateOrder() {
       /* this.addTodoItem({
@@ -233,7 +248,7 @@ export default {
       });*/
 
       this.isUpdate = false;
-      const orderObg = {
+     /* const orderObg = {
         orderNo: this.orderNo,
         tel: this.tel,
         cName: this.cName,
@@ -241,12 +256,12 @@ export default {
         mSent: this.mSent,
         destAr: this.destArr,
         pCode: this.Code
-      };
+      };*/
 
       axios
         .put(
-          apiUrl + "/" + orderObg.orderNo,
-          orderObg /*,{
+          apiUrl + "/" + this.orderObg.orderNo,
+          this.orderObg /*,{
           headers: { "Content-Type": "application/json" }
         }*/
         )
@@ -305,6 +320,14 @@ export default {
       this.mSent = dataItem.mSent;
       this.destArr = dataItem.destArr;
       this.pCode = dataItem.pCode;
+
+      this.orderObg.orderNo = dataItem.orderNo;
+      this.orderObg.tel = dataItem.tel;
+      this.orderObg.cName = dataItem.cName;
+      this.orderObg.postSent = dataItem.postSent;
+      this.orderObg.mSent = dataItem.mSent;
+      this.orderObg.destAr = dataItem.destArr;
+      this.orderObg.pCode = dataItem.pCode;
       console.log(this.orderNo);
       const itemId = dataItem.id;
       if (event.shiftKey && this.selectedItems.length > 0) {
