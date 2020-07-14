@@ -26,6 +26,16 @@ const routes = [
         ]
       },
       {
+        path: "ziplinOrders",
+        component: () =>
+          import(/* webpackChunkName: "piaf" */ "./views/app/home/Ziplin")
+      },
+      {
+        path: "takyekOrders",
+        component: () =>
+          import(/* webpackChunkName: "piaf" */ "./views/app/home/Takyek")
+      },
+      {
         path: "second-menu",
         component: () =>
           import(/* webpackChunkName: "second-menu" */ "./views/app/second-menu"),
@@ -34,12 +44,20 @@ const routes = [
           { path: 'second', component: () => import(/* webpackChunkName: "piaf" */ './views/app/second-menu/Second') }
         ]
       },
-
-
-      {
-        path: "addorder",
+     /* {
+        path: "userlist",
         component: () =>
-          import(/* webpackChunkName: "single" */ "./views/app/single")
+          import(// webpackChunkName: "user" // "./views/app/list"),        
+      },*/
+      {
+        path: "addorderZiplin",
+        component: () =>
+          import(/* webpackChunkName: "single" */ "./views/app/single/ziplinOrder")
+      },
+      {
+        path: "addorderTakyek",
+        component: () =>
+          import(/* webpackChunkName: "single" */ "./views/app/single/takOrder")
       }
     ]
   },
@@ -51,26 +69,41 @@ const routes = [
     path: "/user",
     component: () => import(/* webpackChunkName: "user" */ "./views/user"),
     redirect: "/user/login",
+    
+   /* beforeEach(to, from, next){
+      if (localStorage.getItem('user') != null) {
+        console.log("before each");
+        
+        next('/app')
+      }
+      next();
+    },*/
     children: [
       {
         path: "login",
         component: () =>
-          import(/* webpackChunkName: "user" */ "./views/user/Login")
+          import(/* webpackChunkName: "user" */ "./views/user/Login"),
+          beforeEnter(to, from, next){
+            localStorage.removeItem('user')
+            next();
+        },
       },
       {
         path: "register",
         component: () =>
-          import(/* webpackChunkName: "user" */ "./views/user/Register")
+          import(/* webpackChunkName: "user" */ "./views/user/Register"),
+          beforeEnter: AuthRequired,
       },
-      {
+      /*{
         path: "forgot-password",
         component: () =>
-          import(/* webpackChunkName: "user" */ "./views/user/ForgotPassword")
-      },
+          import(// webpackChunkName: "user" // "./views/user/ForgotPassword")
+      },*/
       {
         path: "reset-password",
         component: () =>
-          import(/* webpackChunkName: "user" */ "./views/user/ResetPassword")
+          import(/* webpackChunkName: "user" */ "./views/user/ResetPassword"),
+          beforeEnter: AuthRequired,
       },
 
     ]

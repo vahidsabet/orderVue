@@ -1,7 +1,7 @@
 <template>
   <b-row>
     <b-colxx xxs="12">
-      <b-card class="mb-4" :title="$t('forms.top-labels-over-line')">
+      <b-card class="mb-4" :title="$t('forms.addorder')">
         <b-form @submit.prevent="onTopLabelsOverLineFormSubmit">
           <label class="form-group has-float-label">
             <input type="email" class="form-control" v-model="topLabelsOverLineForm.email" />

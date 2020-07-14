@@ -43,7 +43,7 @@
                 :row-class="onRowClass"
                 @vuetable:pagination-data="onPaginationData"
                 @vuetable:row-clicked="rowClicked"
-                @vuetable:cell-rightclicked="rightClicked"
+             
               >
                 <template slot="actions" slot-scope="props">
                   <b-form-checkbox
@@ -86,10 +86,11 @@
 import Vuetable from "vuetable-2/src/components/Vuetable";
 import VuetablePaginationBootstrap from "../../../components/Common/VuetablePaginationBootstrap";
 import { apiUrl } from "../../../constants/config";
-import axios from "axios";
+
 
 import DatatableHeading from "../../../containers/datatable/DatatableHeading";
 import LayoutTopLabelsOverLine from "../../../containers/forms/updateForm";
+import axios from "axios";
  //let tokenStr=(localStorage.getItem("accessToken") != null) ? localStorage.getItem("accessToken") : null;
 //console.log("token"+tokenStr);
 /*
@@ -107,17 +108,18 @@ export default {
   components: {
     vuetable: Vuetable,
     "vuetable-pagination-bootstrap": VuetablePaginationBootstrap,
-    "datatable-heading": DatatableHeading,
-    updateForm: LayoutTopLabelsOverLine
+    updateForm: LayoutTopLabelsOverLine,
+    "datatable-heading": DatatableHeading
   },
   data() {
     return {
        httpOptions: {                  
-                    headers: {                        
+                    headers: {                                                
                         Authorization :  `Bearer ${ this.getToken()}`
                     }
                 },
 tokenStr:'',
+moreParams: {},
       isLoad: false,
       apiBase: apiUrl,
       sort: "",
@@ -141,7 +143,7 @@ tokenStr:'',
       mshow: false,
       },
       fields: [
-        {
+      {
           name: "orderNo",
           sortField: "orderNo",
           title: "شماره سفارش",
@@ -204,6 +206,7 @@ tokenStr:'',
    beforeMount(){
     this.getToken();
  },
+   
   methods: {
     makeQueryParams(sortOrder, currentPage, perPage) {
       this.selectedItems = [];
@@ -323,12 +326,10 @@ this.$refs.vuetable.refresh();
       this.perPage = perPage;
       this.$refs.vuetable.refresh();
     },
-
     searchChange(val) {
       this.search = val;
       this.$refs.vuetable.refresh();
     },
-
     selectAll(isToggle) {
       if (this.selectedItems.length >= this.items.length) {
         if (isToggle) this.selectedItems = [];
@@ -367,6 +368,12 @@ this.$refs.vuetable.refresh();
         this.selectedItems
       );
     }
+  },
+  watch:{
+  /*  search(val){
+   //   console.log(val);
+  //  this.onFilterSet(val);
+    }*/
   },
   computed: {
     isSelectedAll() {

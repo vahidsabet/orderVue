@@ -85,22 +85,12 @@
 
 import Vuetable from "vuetable-2/src/components/Vuetable";
 import VuetablePaginationBootstrap from "../../../components/Common/VuetablePaginationBootstrap";
-import { apiUrl } from "../../../constants/config";
+import { apiUrltak } from "../../../constants/config";
 import axios from "axios";
 
 import DatatableHeading from "../../../containers/datatable/DatatableHeading";
-import LayoutTopLabelsOverLine from "../../../containers/forms/updateForm";
- //let tokenStr=(localStorage.getItem("accessToken") != null) ? localStorage.getItem("accessToken") : null;
-//console.log("token"+tokenStr);
-/*
-let http = axios.create({
-    baseURL: apiUrl,
-    headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-         'Authorization' :  `Bearer ${this.tokenStr}`
-    }
-});*/
+import LayoutTopLabelsOverLine from "../../../containers/forms/updateFormTak";
+
 
 export default {
   props: ["title"],
@@ -119,7 +109,7 @@ export default {
                 },
 tokenStr:'',
       isLoad: false,
-      apiBase: apiUrl,
+      apiBase: apiUrltak,
       sort: "",
       page: 1,
       perPage: 8,
@@ -256,13 +246,6 @@ tokenStr:'',
    
     rowClicked(dataItem, event) {
       this.somethingModal("modallg");
-     /* this.orderNo = dataItem.orderNo;
-      this.tel = dataItem.tel;
-      this.cName = dataItem.cName;
-      this.postSent = dataItem.postSent;
-      this.mSent = dataItem.mSent;
-      this.destAr = dataItem.destAr;
-      this.pCode = dataItem.pCode;*/
 
       this.orderObg.orderNo = dataItem.orderNo;
       this.orderObg.tel = dataItem.tel;

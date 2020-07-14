@@ -7,9 +7,7 @@
     </b-colxx>
   </b-row>
   <b-row>
-    <b-colxx xxs="12">
-        <b-card class="mb-4" :title="$t('forms.single')" >
-        </b-card>
+    <b-colxx xxs="12">        
          <layout-top-labels-over-line></layout-top-labels-over-line>
     </b-colxx>
    
@@ -17,7 +15,7 @@
   </div>
 </template>
 <script>
-import LayoutTopLabelsOverLine from "../../../containers/forms/LayoutTopLabelsOverLine";
+import LayoutTopLabelsOverLine from "../../../containers/forms/userPassUpdate";
 export default {
   components: {
     "layout-top-labels-over-line": LayoutTopLabelsOverLine

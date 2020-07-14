@@ -61,7 +61,7 @@
 </template>
 <script>
 
-import { apiUrl } from "../../constants/config";
+import { apiUrltak } from "../../constants/config";
 import axios from "axios";
 import { getDirection } from "../../utils";
 //:value="cName" @input="$emit('input', $event.target.value)"
@@ -128,7 +128,7 @@ export default {
       };
       axios
         .put(
-          apiUrl + "/" + orderObg.orderNo,
+          apiUrltak + "/" + orderObg.orderNo,
           orderObg,
           {   headers: {                        
                         Authorization :  `Bearer ${ this.getToken()}`

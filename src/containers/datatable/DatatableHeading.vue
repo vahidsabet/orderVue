@@ -102,6 +102,11 @@ export default {
       ],
       pageSizes: [4, 8, 12]
     };
-  }
+  },
+  watch:{
+    searchChange(val){
+      console.log(val);
+    }
+  },
 };
 </script>

@@ -17,6 +17,18 @@
           <h6 class="mb-4">{{ $t('user.login-title')}}</h6>
 
           <b-form @submit.prevent="formSubmit" class="av-tooltip tooltip-label-bottom">
+            <b-form-group :label="$t('user.oldPassword')" class="has-float-label mb-4">
+              <b-form-input
+                type="password"
+                v-model="$v.form.oldPassword.$model"
+                :state="!$v.form.oldPassword.$error"
+              />
+              <b-form-invalid-feedback v-if="!$v.form.oldPassword.required">پسورد قبلی را وارد نمایید</b-form-invalid-feedback>
+              <b-form-invalid-feedback
+                v-else-if="!$v.form.oldPassword.minLength || !$v.form.oldPassword.maxLength"
+              >پسورد شما باید بین 4 تا 16 کاراکتر باشد</b-form-invalid-feedback>
+            </b-form-group>
+
             <b-form-group :label="$t('user.password')" class="has-float-label mb-4">
               <b-form-input
                 type="password"
@@ -43,10 +55,7 @@
             </b-form-group>
 
             <div class="d-flex justify-content-between align-items-center">
-              <router-link
-                tag="a"
-                to="/user/forgot-password"
-              >{{ $t('user.forgot-password-question')}}</router-link>
+             
               <b-button
                 type="submit"
                 variant="primary"
@@ -69,7 +78,10 @@
                   <i class="simple-icon-exclamation"></i>
                 </span>
                 <span class="label">{{ $t('user.reset-password-button') }}</span>
-              </b-button>
+              </b-button> <router-link
+                tag="a"
+                to="/app"
+              >{{ $t('pages.go-back-home')}}</router-link>
             </div>
           </b-form>
         </div>
@@ -88,11 +100,12 @@ const {
   email,
   sameAs
 } = require("vuelidate/lib/validators");
-
+import axios from "axios";
 export default {
   data() {
     return {
       form: {
+        oldPassword: "",
         password: "",
         passwordAgain: ""
       }
@@ -101,6 +114,11 @@ export default {
   mixins: [validationMixin],
   validations: {
     form: {
+      oldPassword: {
+        required,
+        maxLength: maxLength(16),
+        minLength: minLength(4)
+      },
       password: {
         required,
         maxLength: maxLength(16),
@@ -126,10 +144,16 @@ export default {
       this.$v.form.$touch();
       if (!this.$v.form.$anyError) {
         this.resetPassword({
+          oldPassword: this.form.oldPassword,
           newPassword: this.form.password,
-          resetPasswordCode: this.$route.query.oobCode || ""
+          confirmPassword: this.form.passwordAgain       
         });
       }
+    }, getToken(){
+      let user=(localStorage.getItem("user") != null) ? JSON.parse(localStorage.getItem("user")) : null;
+      if(user){     
+           return user.accessToken;
+      }     
     }
   },
   watch: {
@@ -145,13 +169,16 @@ export default {
       if (val) {
         this.$notify(
           "success",
-          "Reset Password Success",
-          "Reset password success",
+          "ریست پسورد",
+          "پسورد با موفقیت تغییر یافت",
           {
             duration: 3000,
             permanent: false
           }
         );
+          setTimeout(() => {
+                    this.$router.push("/user");
+                }, 200);
       }
     }
   }

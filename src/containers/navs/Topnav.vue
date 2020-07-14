@@ -4,8 +4,7 @@
       <a
         href="#"
         class="menu-button d-none d-md-block"
-        @click.prevent.stop="changeSideMenuStatus({step :menuClickCount+1,classNames:menuType,selectedMenuHasSubItems})"
-      >
+        @click.prevent.stop="changeSideMenuStatus({step :menuClickCount+1,classNames:menuType,selectedMenuHasSubItems})" >
         <menu-icon />
       </a>
       <a
@@ -15,21 +14,7 @@
       >
         <mobile-menu-icon />
       </a>
-      <div
-        :class="{'search':true, 'mobile-view':isMobileSearch}"
-        ref="searchContainer"
-        @mouseenter="isSearchOver=true"
-        @mouseleave="isSearchOver=false"
-      >
-        <b-input
-          :placeholder="$t('menu.search')"
-          @keypress.native.enter="search"
-          v-model="searchKeyword"
-        />
-        <span class="search-icon" @click="searchClick">
-          <i class="simple-icon-magnifier"></i>
-        </span>
-      </div>
+     
       <div class="d-inline-block">
         <b-dropdown
           id="langddm"
@@ -89,13 +74,11 @@
           no-caret
         >
           <template slot="button-content">
-            <span class="name mr-1">{{currentUser.title}}</span>
+            <span class="name mr-1">{{currentUser !=null && currentUser.title}}</span>
            
           </template>
-          <b-dropdown-item>پروفایل</b-dropdown-item>
          
-          <b-dropdown-divider />
-          <b-dropdown-item @click.prevent="signOut">خروج</b-dropdown-item>
+          <b-dropdown-item @click.prevent="logout">خروج</b-dropdown-item>
         </b-dropdown>
       </div>
     </div>
@@ -105,14 +88,13 @@
 <script>
 import Switches from "vue-switches";
 import notifications from "../../data/notifications";
-import firebase from "firebase";
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import { MenuIcon, MobileMenuIcon } from "../../components/Svg";
 import {
   searchPath,
   menuHiddenBreakpoint,
   localeOptions,
-  buyUrl,
+ 
   defaultColor,
   themeSelectedColorStorageKey
 } from "../../constants/config";
@@ -132,7 +114,7 @@ export default {
       menuHiddenBreakpoint,
       searchPath,
       localeOptions,
-      buyUrl,
+      
       notifications,
       isDarkActive: false
     };
@@ -168,25 +150,22 @@ export default {
       if (direction !== currentDirection) {
         setDirection(direction);
       }
-
       this.setLang(locale);
+    },
+    addNotification(
+      type = "info",
+      title = "This is Notify Title",
+      message = "This is Notify Message,<br>with html."
+    ) {
+      this.$notify(type, title, message, { duration: 3000, permanent: false });
     },
     logout() {
       this.signOut().then(() => {
-        this.$router.push("/user/login");
+        this.addNotification("info filled" , "پیام", "با موفقیت خارج شدید");
+        this.$router.push("/user");
       });
     },
-signOut() {
-      firebase
-        .auth()
-        .signOut()
-        .then(() => {
-           this.$router.push("/user/login");
-         /* this.$router.replace({
-            name: "home"
-          });*/
-        });
-    },
+
     toggleFullScreen() {
       const isInFullScreen = this.isInFullScreen();
 

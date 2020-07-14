@@ -64,14 +64,14 @@ import {
 import {
     validationMixin
 } from "vuelidate";
-import firebase from "firebase";
 const {
     required,
     maxLength,
     minLength,
     email
 } = require("vuelidate/lib/validators");
-
+import { apiUser } from "../../constants/config";
+import axios from "axios";
 export default {
     data() {
         return {
@@ -99,7 +99,19 @@ export default {
     },
     computed: {
         ...mapGetters(["currentUser", "processing", "loginError"])
+
     },
+  /*  beforeMount() {
+        var user = firebase.auth().currentUser;
+
+        if (user) {
+            console.log('====================================');
+            console.log("hi");
+            console.log('====================================');
+             
+                this.$router.push("/");
+        }
+    },*/
     methods: {
         ...mapActions(["login"]),
         formSubmit() {
@@ -108,29 +120,26 @@ export default {
            // this.form.password = "piaf123";
             this.$v.form.$touch();
             if (!this.$v.form.$anyError) {
-                firebase
+              /*  firebase
                 .auth()
                 .signInWithEmailAndPassword(this.form.email, this.form.password)
                 .then(data => {
-                    this.addNotification("success filled" , "پیام",data);
-                    this.login({
-                    email: data.user.email,
-                    password: data.user.password
-                });
+                    this.addNotification("success filled" , "پیام",data);                    
                     console.log('====================================');
-                    console.log(data.user);
-                    console.log(data.user.isAnonymous);
+                    console.log(data.user);                    
                     console.log('====================================');
                // this.$router.replace({ name: "Dashboard" });
                 })
                 .catch(err => {
                 this.error = err.message;
-                this.addNotification("success filled" , "پیام",err.message);
-                });
-               /* this.login({
+               
+                });*/
+
+                
+               this.login({
                     email: this.form.email,
                     password: this.form.password
-                });*/
+                });              
             }
               
         },
@@ -143,8 +152,9 @@ export default {
     }
     },
     watch: {
-        currentUser(val) {
-            if (val && val.uid && val.uid.length > 0) {
+        currentUser(val) {            
+            if (val && val.uid) {                
+                 this.addNotification("success filled" , "ورود", "خوش آمدید");
                 setTimeout(() => {
                     this.$router.push("/");
                 }, 200);
@@ -152,7 +162,7 @@ export default {
         },
         loginError(val) {
             if (val != null) {
-                this.$notify("error", "Login Error", val, {
+                this.$notify("error", "خطای ورود", val, {
                     duration: 3000,
                     permanent: false
                 });

@@ -168,16 +168,16 @@ export default {
       ],
       sortOptions: [
         {
-          column: "title",
-          label: "Product Name"
+          column: "orderNo",
+          label: "شماره سفارش"
         },
         {
-          column: "category",
-          label: "Category"
+          column: "cName",
+          label: "نام مشتری"
         },
         {
-          column: "status",
-          label: "Status"
+          column: "tel",
+          label: "تلفن"
         }
       ],
       pageSizes: [4, 8, 12]
